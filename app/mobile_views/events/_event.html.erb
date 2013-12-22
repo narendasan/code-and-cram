@@ -1,0 +1,16 @@
+<div data-role="collapsible">
+  <h3 class="event-title">
+    <% if event.all_day %>
+      <%= event.start_time.strftime("%A, %B %d") %>
+      <% if event.start_time.to_date != event.end_time.to_date %>
+        through <%= event.end_time.strftime("%A, %B %d") %>
+      <% end %>
+    <% else %>
+      <%= event.start_time.strftime("%A, %B %d at %l:%M %p") %>
+      through <%= event.end_time.strftime("%A, %B %d at %l:%M %p") %>
+    <% end %>
+  </h3>
+  <p class="event-date">
+    <%= link_to event.name, school_event_path(event) %> <%= image_tag("embed/icon-lock.png", class: "lock-icon") if event.private_item %>
+  </p>
+</div>

@@ -1,0 +1,7 @@
+<h2><%= @page.name %></h2>
+<div class="markdown"><em><%= markdown(@page.contents).html_safe %></em></div>
+<ul id="photo-gallery">
+  <% @page.photos.each do |photo| %>
+  <li><a rel="photo-gallery" href="<%= photo.photo.url(:original) %>" class="iframe" title="<%= photo.caption %>"><%= image_tag photo.photo.url(:thumb), width: "168", alt: photo.caption %></a></li>
+  <% end %>
+</ul>

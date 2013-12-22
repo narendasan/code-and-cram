@@ -1,0 +1,13 @@
+<% if signed_in? %>
+  <%- @sub_links = sub_links_for :dashboard -%>
+<% else %>
+  <% @current = "Announcements" %>
+  <%- @sub_links = sub_links_for :welcome -%>
+<% end %>
+
+<div data-role="collapsible"data-theme="a">
+  <h3>
+    Announcement: <%= @announcement.title %>
+  </h3>
+  <%= render(@announcement) -%>
+</div>

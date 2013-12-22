@@ -1,0 +1,8 @@
+<ul data-role="listview" data-divider-theme="a" data-inset="true">
+  <%- staff_pages.each do |staff_page| -%>
+    <li data-theme="a">
+      <%= link_to staff_page.full_name_inv, staff_page_path(staff_page) %>
+      <span class="staff-email"><%= mail_to staff_page.email %></span>
+    </li>
+  <%- end -%>
+</ul>

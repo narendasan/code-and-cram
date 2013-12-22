@@ -1,0 +1,111 @@
+@import "compass";
+
+.h1-button {
+  float: right;
+  margin: -40px 0 0 -30px;
+  background: image-url("embed/h1-button.png") right no-repeat #fff;
+
+  &:hover {
+    background: image-url("embed/h1-button-hover.png") right no-repeat;
+  }
+
+  &:active {
+    background: image-url("embed/h1-button-active.png") right no-repeat;
+  }
+}
+
+.success {
+  background: image-url("embed/flash-success.png") repeat-x;
+}
+
+.error {
+  background: image-url("embed/flash-error.png") repeat-x;
+}
+
+.notice {
+  background: image-url("embed/flash-notice.png") repeat-x;
+}
+
+#alert {
+  background: #fb3 image-url("embed/ie-alert-bg.png") bottom repeat-x;
+}
+
+#sidebar {
+  .box {
+    background: image-url("embed/side-box-bottom.png") bottom;
+
+    &.inner {
+      background: image-url("embed/side-box-top.png") no-repeat;
+    }
+  }
+}
+
+form#ic {
+  background: image-url("embed/infinite-campus.png") 15px right no-repeat;
+
+  input[type="text"], input[type="password"] {
+    background: image-url("embed/input-text-transparent.png");
+  }
+}
+
+.my-classes ul {
+  background: image-url("embed/box-divider.png") 96px 0px repeat-y !important;
+}
+
+#class-page-title-bar {
+  a.h1-button {
+    margin: -30px 0 0 8px;
+  }
+}
+
+form.edit_subscription {
+  margin: -25px 0 0 8px;
+}
+
+#counseling-upper {
+  position: relative;
+  top: -91px;
+}
+
+#counseling-box {
+  position: relative;
+  top: -91px;
+}
+
+header nav {
+  background: image-url("ribbon.png") 50% 0;
+}
+
+#counseling-container header nav {
+  background: image-url("ribbon-smooth.png") 50% 0;
+}
+
+.classroom .item-info {
+  &.discussions-icon {
+    background-image: image-url("embed/classroom-icon-discussions.png");
+  }
+
+  &.questions-icon {
+    background-image: image-url("embed/classroom-icon-questions.png");
+  }
+
+  &.flashcards-icon {
+    background-image: image-url("embed/classroom-icon-flashcards.png");
+  }
+
+  &.quizzes-icon {
+    background-image: image-url("embed/classroom-icon-quizzes.png");
+  }
+}
+
+#footer {
+  background: image-url("embed/footer.png") repeat-x;
+
+  #footer-container {
+    background: image-url("embed/footer-knight.png") 190px center no-repeat;
+
+    #bvsd-logo {
+      background: image-url("embed/bvsd-logo-small.png") bottom no-repeat;
+    }
+  }
+}

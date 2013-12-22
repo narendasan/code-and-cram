@@ -1,0 +1,30 @@
+<div class="box-container-full">
+  <h1>
+    Feeds Index
+    <%= link_to "Create New Feed", new_feed_path, class: "h1-button" %>
+  </h1>
+  <% @feeds_grouped.each_pair do |context, feeds| %>
+  <h2><%= context %></h2>
+  <table id="static-page-index" data-update-url="<%= sort_feeds_path %>">
+    <thead><tr>
+      <th id="edit-column"></th>
+      <th id="delete-column"></th>
+      <th id="editors-column"></th>
+      <th id="title-column">Title</th>
+      <th id="active-column">Active</th>
+    </tr></thead>
+    <tbody>
+      <%- feeds.each do |feed| -%>
+        <%= content_tag_for :tr, feed, style: "cursor:move" do %>
+          <td><%= link_to "Edit", edit_feed_path(feed) %></td>
+          <td><%= link_to "Delete", feed_path(feed), method: :delete, confirm: "Are you sure?" %></td>
+          <td><%= link_to "Editors", editors_feed_path(feed) %></td>
+          <td><%= link_to feed.title, feed_path(feed) %></td>
+          <td><%= feed.active ? "Yes" : "No" %></td>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
+</div>
+

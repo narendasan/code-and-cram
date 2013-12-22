@@ -1,0 +1,15 @@
+<%- @crumbs = crumbs_for(@calendar) -%>
+
+<div class="box-container-large">
+  <h1>
+    <%= @calendar.name %>
+    <% if @calendar_access %>
+    <%= link_to "Create New Event", new_event_path(@calendar), class: "h1-button" %>
+    <% end %>
+    <%= link_to "List View", calendar_list_path(@calendar.events.new), class: "h1-button" %>
+    <% if @calendar.name == "School Calendar" %>
+      <%= select_tag(:calendar_filter, options_for_select([['All Calendars', 'all'], ['Athletics', 'athletics'], ['Fine Arts', 'fine-arts'], ['Community', 'community']], params[:view] || 'all')) %>
+    <% end %>
+  </h1>
+  <%= raw(event_calendar) %>
+</div>

@@ -1,0 +1,75 @@
+<% # attachment_array defined in helpers/attachments_helper.rb %>
+<%= form_for attachment_array(@folder, @attachment), html: { multipart: true } do |f| %>
+  <div class="field">
+    <%- if @title.include?("Edit") -%>
+    <%= f.label :file, "Replace File" %>
+    <%- else -%>
+    <%= f.label :file, "Select File" %>
+    <%- end -%>
+    <%= f.file_field :file %>
+  </div>
+    <%= f.hidden_field :attachable_id %>
+    <%= f.hidden_field :attachable_type %>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "annotated" %>
+  </div>
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "annotated" %>
+  </div>
+  <%= render "shared/privacy_fields", resource: "file", page: @page, f: f %>
+  <div id="submit-container">
+    <div class="submit">
+      <% if @title.include?("Edit") %>
+      <%= f.submit "Save", data: { disable_with: 'Saving...' } %>
+      <% else %>
+      <%= f.submit "Upload", data: { disable_with: 'Uploading...' } %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<div id="full-page-side-bar">
+  <p class="instructions">
+    Upload PDFs, Word documents, PowerPoint presentations, images, and other documents to be accessible by your students.
+  </p>
+
+  <p class="instructions">
+    Select a file using the button to the left. Enter a file name to be displayed on the site, and an optional description. Scroll down and click the 'Upload' button when you're done.
+  </p>
+
+  <p class="instructions">
+    <strong>
+      New:
+    </strong>
+      Uploading files one at a time can be tedious. <%= link_to "Click here to upload multiple files simultaneously", multiple_attachments_path(@page, @folder) %>.
+  </p>
+
+  <p class="instructions">
+    <strong>
+      <em>
+        <br/>Need help?
+      </em>
+      <%= link_to "Contact the Web Team", emails_path %>.
+    </strong>
+  </p>
+
+  <div id="attachment_name_annotation" class="annotation overlap">
+    <p>
+    Please keep file names brief. Names that are too long may not display in some parts of the site.
+    </p>
+
+    <p>
+    If you want to provide details, please put them in the description instead. A description is recommended, but not required.
+    </p>
+
+    <p>
+    Files are sorted alphabetically by name.
+    </p>
+  </div>
+
+  <div id="attachment_description_annotation" class="annotation overlap">
+    <%= render "shared/markup_annotation" %>
+  </div>
+</div>

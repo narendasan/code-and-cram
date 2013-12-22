@@ -1,0 +1,37 @@
+<% @sub_links = sub_links_for :dashboard %>
+
+<div class="box-container-full">
+  <h1>Messages &ndash; All Classes</h1>
+  <p class="label">Class Messages</p>
+  <div class="all-messages">
+    <ul class="subscription-list">
+      <% @class_pages.each do |class_page| %>
+      <li>
+        <a href="<%= url_for staff_page_class_page_path(class_page.staff_page, class_page) %>" class="photo"><%= image_tag class_page.staff_page.staff_photo.url(:thumb), alt: "#{class_page.staff_page.full_name}", size: "56x56" %></a>
+        <div class="class-info">
+          <p class="class-name"><%= class_page.name %></p>
+          <p class="staff-name"><%= class_page.staff_page.last_name %></p>
+        </div>
+        <p class="message-count"><%= class_page.messages.length %></p>
+      </li>
+      <% end %>
+    </ul>
+    <% @class_pages.each do |class_page| %>
+    <div class="subscription-messages hidden" id="<%= class_page.name.downcase.gsub("\ ","-") + "-" + class_page.staff_page.last_name.downcase.gsub("\ ","-") %>">
+      <% if class_page.messages.any? %>
+      <ul class="messages">
+        <% class_page.messages.each do |message| %>
+        <li><%= render partial: "messages/message_short", locals: { message: message } %></li>
+        <% end %>
+      </ul>
+      <% else %>
+      <div class="empty-module">
+        <%= image_tag "icon-messages-dark.png", alt: "", class: "class_page_overview_icon" %>
+        <p><%= class_page.name %> doesn't have any messages yet.</p>
+        <span>Please select a different class from the left.</span>
+      </div>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="card">
+  <h1>
+      Upcoming Assignments
+  </h1>
+  <%- if @assignments.upcoming.count > 0 -%>
+     <div data-role="collapsible-set">
+      <%- @assignments.upcoming.each do |assignment| -%>
+        <%= render assignment %>
+       <%- end -%>
+    </div>
+  <%- else -%>
+    <div class="empty-container">
+       <%= image_tag "icon-assignments.png", alt: "", class: "class_page_overview_icon" %>
+      <p>This class doesn't have any assignments yet.</p>
+    </div>
+  <%- end -%>
+</div>
+
+<%- if @assignments.past.count > 0 -%>
+<div class="box-container-large">
+  <h2>
+    Past Assignments
+  </h2>
+  <div data-role="collapsible-set" class="assignments past">
+    <%- @assignments.past.each do |assignment| -%>
+        <%= render assignment %>
+    <%- end -%>
+  </div>
+</div>
+<%- end -%>

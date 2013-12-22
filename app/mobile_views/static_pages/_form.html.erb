@@ -1,0 +1,130 @@
+<% if @activity_page && @activity_page.class.to_s == "ActivityPage" && @activity_page.secure %>
+<% # Only private (i.e. secure) Activity Pages can have secure static pages %>
+<div class="checkbox">
+  <%= f.check_box :secure %>
+  <%= f.label :secure, "Private" %>
+</div>
+<% end %>
+
+<% if @page.is_a?(StaticPage) %>
+  <h2 class="page-path">Page path:
+    <span class="page-url">/
+      <%- if @parent -%>
+        <% @parent.ancestors.collect do |c| %>
+          <%= link_to c.url, static_page_path(c) %> /
+        <% end %>
+        <%= link_to @parent.url, static_page_path(@parent) %> /
+      <%- end -%>
+      <% if @page.url %>
+        <%= link_to @page.url, static_page_path(@page) %>
+      <% else %>
+        <strong>new</strong>
+      <% end %>
+    </span>
+  </h2>
+  <% if current_user.admin? %>
+    <%# Nav Page link placement for static pages %>
+    <div class="field ui-hide-label" data-role="fieldcontain">
+      <%= f.label :nav_page_id, "Nav Page ID" %>
+      <%= f.text_field :nav_page_id, class: "annotated", placeholder: "Nav Page ID" %>
+    </div>
+    <div class="field ui-hide-label" data-role="fieldcontain">
+      <%= f.label :nav_section_name, "Nav Section Name" %>
+      <%= f.text_field :nav_section_name, class: "annotated", placeholder: "Nav Section Name" %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="field ui-hide-label" data-role="fieldcontain">
+  <%= f.label :name, "Name" %>
+  <%= f.text_field :name, class: "annotated", placeholder: "Name" %>
+</div>
+<div class="checkbox" id="hide_name_field">
+  <%= f.check_box :hide_name %>
+  <%= f.label :hide_name, "Hide Name" %>
+</div>
+<div class="checkbox" id="hide_name_field">
+  <%= f.check_box :hidden %>
+  <%= f.label :hidden, "Hide From Navigation" %>
+</div>
+<div class="field ui-hide-label" data-role="fieldcontain">
+  <%= f.label :url, "URL" %>
+  <%= f.text_field :url, class: "annotated", placeholder: "URL" %>
+</div>
+
+<div id="page-layout-select">
+  <p>Select page layout:</p>
+  <div class="layout-select-field">
+    <%= f.radio_button :template, "1" %>
+    <%= f.label :template_1, "Text & Photos" %>
+    <%= link_to image_tag("layout-1-thumb.png"),
+                image_path("layout-1.png"),
+                  class: "fancybox layout-thumb",
+                  rel: "layouts",
+                  title: "Layout 1: Text & Photos" %>
+  </div>
+  <div class="layout-select-field">
+    <%= f.radio_button :template, "2" %>
+    <%= f.label :template_2, "Full Page Text" %>
+    <%= link_to image_tag("layout-2-thumb.png"),
+                image_path("layout-2.png"),
+                  class: "fancybox layout-thumb",
+                  rel: "layouts",
+                  title: "Layout 2: Full Page Text" %>
+  </div>
+  <div class="layout-select-field">
+    <%= f.radio_button :template, "3" %>
+    <%= f.label :template_3, "Photo gallery" %>
+    <%= link_to image_tag("layout-3-thumb.png"),
+                image_path("layout-3.png"),
+                  class: "fancybox layout-thumb",
+                  rel: "layouts",
+                  title: "Layout 3: Photo Gallery" %>
+  </div>
+</div>
+
+<div class="field ui-hide-label" data-role="fieldcontain">
+  <%= f.label :contents, "Contents" %>
+  <%= f.text_area :contents, class: "annotated", placeholder: "Contents" %>
+</div>
+
+<p class="field-heading">Page Forwarding<%= " & Access Restriction" if @page.is_a?(StaticPage) %></p>
+<div class="field ui-hide-label" data-role="fieldcontain">
+  <%= f.label :url_forward, "URL Forward" %>
+  <%= f.text_field :url_forward, class: "annotated", placeholder: "URL Forward" %>
+</div>
+<% if @page.is_a?(StaticPage) %>
+<% # Static Page access can be restricted by user type %>
+<div class="field">
+  <%= f.label :restricted_access, "Restrict Access by User Type:" %>
+  <%= f.select :restricted_access, [["None", ""], ["Student", "student"], ["Staff", "staff"], ["Guest", "guest"]] %>
+</div>
+<% end %>
+
+<p class="field-heading">Links</p>
+<p class="instructions_inline">Create links to give visitors quick access to other web pages. These links will only appear on the <strong>Text &amp; Photos</strong> layout.</p>
+<%= f.fields_for :links do |link_form| %>
+<%= render partial: "shared/link_fields", locals: { f: link_form } %>
+<%- end -%>
+<%= f.link_to_add "Add a link", :links, class: "form-toggle" %>
+<p class="field-heading">Photos</p>
+<p class="instructions_inline">Upload photos one at a time, or in groups all at once. For large quantities of photos, you should use the <strong>Photo Gallery</strong> layout. Photos will not appear when the <strong>Full Page Text</strong> layout is used.</p>
+<%= f.fields_for :photos do |photo_form| -%>
+<%= render partial: "shared/photo_fields", locals: { f: photo_form } %>
+<%- end -%>
+<%= f.link_to_add "Add a photo", :photos, class: "form-toggle" %>
+<%= link_to "Upload Multiple Photos", multiple_photos_path(@page), class: "grey-button" unless @page.new_record? %>
+<% unless @activity_page || @page.new_record? %>
+<p class="field-heading">Files</p>
+<p class="instructions_inline">Upload files to be displayed on this static page.</p>
+<%= link_to "Upload a file", new_folder_attachment_path(@folder), class: "grey-button" %>
+<div class="checkbox">
+  <p class="instructions_inline">By default, files that you upload are displayed in a files browser below this page's contents. Check the box below to hide these files from non-privileged visitors. You will still see the file browser.</p>
+  <%= f.check_box :hide_files %>
+  <%= f.label :hide_files, "Hide Files" %>
+</div>
+<% end %>
+
+<div id="submit-container">
+  <div class="submit"><%= f.submit "Submit", data: { disable_with: 'Submitting...' } %></div>
+</div>

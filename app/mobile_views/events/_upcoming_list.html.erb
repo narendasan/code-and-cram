@@ -1,0 +1,20 @@
+<ul class="events">
+  <% @month = 0 %>
+  <% @year = Time.now.year %>
+  <div data-role="collapsible-set">
+    <%- events.upcoming.each do |event| -%>
+      <% if event.start_time.month != @month %>
+        <h3 class="month">
+          <%= event.start_time.strftime("%B") %>
+          <% if event.start_time.year != @year %> &ndash; <%= event.start_time.strftime("%Y") %><% @year = event.start_time.year %>
+          <% end %>
+          <% @month = event.start_time.month %>
+        </h3>
+      <% end %>
+      <p>
+        <div data-role="collapsible-set"><%= render partial: "events/event", locals: { event: event } %>
+        </div>
+      </p>
+    <%- end -%>
+  </div>
+</ul>

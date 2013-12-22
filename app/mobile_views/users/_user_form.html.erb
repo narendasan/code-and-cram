@@ -1,0 +1,133 @@
+<style>
+  h4 {
+    text-align: left !important;
+    color: black;
+    font-family: 'Lato', sans-serif !important;
+    font-weight: 400;
+  }
+</style>
+
+<h1 class="blue">Edit <%= current_user == @user ? "Your" : "User" %> Account</h1>
+
+<%= form_for(@user, html: { class: "full-page" }) do |f| %>
+  <% if current_user.try(:admin?) %>
+    <h4>Name</h4>
+    <div class="field ui-hide-label" data-role="fieldcontain">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+    <h4>BVSD Email</h4>
+    <div class="field ui-hide-label" data-role="fieldcontain">
+      <%= f.label :email, "BVSD Email" %>
+      <%= f.text_field :email, class: "annotated" %>
+    </div>
+    <div id="user_email_annotation" class="annotation">
+      <p>Your sign-in email must be your BVSD address, and should be all lowercase. Student addresses should resemble <span>jadams1234@bvsd.org</span>and staff emails should resemble <span>abraham.lincoln@bvsd.org</span>.</p>
+    </div>
+    <h4>Student ID</h4>
+    <div class="field ui-hide-label" data-role="fieldcontain">
+      <%= f.label :student_id, "Student ID" %>
+      <%= f.text_field :student_id %>
+    </div>
+  <% else %>
+    <h4>Name</h4>
+    <p><%= @user.name %></p>
+    <h4>BVSD Email</h4>
+    <p><%= @user.email %></p>
+    <h4>Student ID</h4>
+    <p><%= @user.student_id %></p>
+  <% end %>
+
+  <h4>Preferred Email</h4>
+  <div class="field ui-hide-label" data-role="fieldcontain">
+    <%= f.label :preferred_email %>
+    <%= f.text_field :preferred_email, class: "annotated" %>
+  </div>
+  <%- if @user.preferred_email.blank? -%>
+  <a href="#" id="user_add_preferred_email" class="form-toggle">Add preferred email</a>
+  <div id="user_preferred_email_container" class="hidden">
+  <%- else -%>
+  <a href="#" id="event_remove_preferred_email" class="form-toggle">Remove preferred email</a>
+  <div class="field" data-role="fieldcontain">
+  <%- end -%>
+
+    <div id="user_preferred_email_annotation" class="annotation">
+      <p>If you have an email other than your BVSD address at which you prefer to be contacted, you may provide one here.</p>
+      <p><b>Adding a preferred email will not change your sign-in address.</b></p>
+    </div>
+  </div>
+
+  <% if @title.include?("Edit") %>
+    <h4>Change Password</h4>
+    <div class="field ui-hide-label" data-role="fieldcontain">
+      <%= f.label :password, "Change Password" %>
+      <%= f.password_field :password, placeholder: "New Password", autocomplete: :off, class: "annotated" %>
+    </div>
+    <div class="field ui-hide-label" data-role="fieldcontain">
+      <%= f.label :password_confirmation, "Confirm Changed Password" %>
+      <%= f.password_field :password_confirmation, placeholder: "Confirm Password", autocomplete: :off %>
+    </div>
+  <% else %>
+    <h4>Password Settings</h4>
+    <div class="field ui-hide-label" data-role="fieldcontain">
+      <%= f.label :password %>
+      <%= f.password_field :password, placeholder: "Password", autocomplete: :off, class: "annotated" %>
+    </div>
+    <div class="field ui-hide-label" data-role="fieldcontain">
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation, placeholder: "Confirm Password",autocomplete: :off %>
+    </div>
+  <% end %>
+  <div id="user_password_annotation" class="annotation">
+    <p>Passwords must be between 6 and 40 characters.</p>
+  </div>
+
+  <% if current_user.try(:admin?) %>
+    <% if @user.student? || @title.include?("Create") %>
+      <h4>Grade</h4>
+      <div class="field ui-hide-label" data-role="fieldcontain">
+        <%= f.label :grade, "Grade" %>
+        <%= f.text_field :grade, class: "annotated" %>
+      </div>
+    <% end %>
+
+    <h4>Welcome Message</h4>
+    <div class="field ui-hide-label" data-role="fieldcontain">
+      <%= f.label :welcome, "Welcome Message" %>
+      <%= f.text_area :welcome, rows: 3, class: "annotated" %>
+    </div>
+    <div id="user_welcome_annotation" class="annotation">
+      <p>Enter a message here to display as a flash when <%= @user == current_user ? "you sign" : "this user signs" %> in. Welcome messages must not exceed 120 characters.</p>
+      <p>Characters remaining: <span class="remaining">120</span></p>
+    </div>
+    <h4>User Type</h4>
+    <div class="field ui-hide-label" data-role="fieldcontain">
+      <%= f.label :user_type, "User Type" %>
+      <%= f.select :user_type, [["Student", "student"], ["Staff", "staff"], ["Guest", "guest"]], prompt: "Select User Type" %>
+    </div>
+
+    <div id="user_grade_annotation" class="annotation">
+      <p>Only student accounts should have grades. For all other types of User accounts, please leave this field blank.</p>
+    </div>
+  <% end %>
+
+  <h2 style="text-align:center;">Custom Settings</h2>
+  <p class="field-heading">Classroom Notifications</p>
+  <p class="instructions_inline">Notify me by email when:</p>
+  <div class="checkbox">
+    <%= f.check_box :discussion_comment_notification %>
+    <%= f.label :discussion_comment_notification, "Someone comments on a discussion I created" %>
+  </div>
+  <div class="checkbox">
+    <%= f.check_box :question_answer_notification %>
+    <%= f.label :question_answer_notification, "Someone answers a question I asked" %>
+  </div>
+  <div class="checkbox">
+    <%= f.check_box :question_resolved_notification %>
+    <%= f.label :question_resolved_notification, "My answer to a question is accepted" %>
+  </div>
+
+  <div id="submit-container">
+    <div class="submit"><%= f.submit "Submit", data: { disable_with: 'Submitting...' } %></div>
+  </div>
+<% end %>

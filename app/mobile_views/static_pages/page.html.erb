@@ -1,0 +1,5 @@
+<%- @crumbs = crumbs_for :static_page -%>
+<h1><%= @page.name %></h1>
+<%= link_to "Edit Page", edit_static_page_path(@page) %>
+<%= @page.contents.html_safe %>
+<%= static_page_page_url(@page) %>

@@ -1,0 +1,13 @@
+<%- side_links = [] -%>
+
+<%- if side_links.any? -%>
+  <b>
+    <%= safe_join( side_links, " | ") %>
+  </b>
+<%- end -%>
+<a class="<%= file_icon_class(attachment.file_content_type) %>" href="<%= attachment.file.url %>" data-ajax="false">
+  <%= attachment.name %>
+</a>
+<div class="hidden file-description" data-ajax="false">
+  <%= markdown(attachment.description).html_safe %>
+</div>

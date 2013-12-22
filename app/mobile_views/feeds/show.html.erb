@@ -1,0 +1,46 @@
+<%- content_for :head do -%>
+<%= auto_discovery_link_tag(:atom, feed_url(@feed, :atom), { title: "Fairview #{@feed.title}" }) %>
+<%- end -%>
+
+<% if @feed.context == "school" %>
+  <% if signed_in? %>
+    <%- @sub_links = sub_links_for :dashboard -%>
+  <% else %>
+    <% @current = "Announcements" %>
+    <%- @sub_links = sub_links_for :welcome -%>
+  <% end %>
+<% end %>
+
+<div class="card">
+  <div class="box-container-full">
+    <h2>
+      <%= @feed.title %>
+    </h2>
+    <div data-role="collapsible-set">
+      <%- @upcoming_announcements.each do |announcement| -%>
+        <%= content_tag "div", render(announcement) -%>
+      <%- end -%>
+    </div>
+  </div>
+</div>
+
+<%- if current_user.try(:admin) -%>
+  <div class="card">
+    <%- if @expired_announcements.length > 0 -%>
+      <div class="box-container-full">
+        <h2>Expired <%= @feed.title %></h2>
+        <div data-role="collapsible-set">
+          <%- @limit = params[:limit].try(:to_i) || 20 -%>
+          <%- @expired_announcements.limit(@limit).each do |announcement| -%>
+            <%= content_tag "div", render(announcement) -%>
+          <%- end -%>
+        </div>
+      </div>
+      <%- if @limit <= 50 -%>
+        <div class="show-more">
+          <%= link_to 'More Announcements', feed_path(@feed, limit: @limit + 10) %>
+        </div>
+      <%- end -%>
+    <%- end -%>
+  </div>
+<%- end -%>

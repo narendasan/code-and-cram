@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<%= render "layouts/head" %>
+
+<body>
+  <div data-role="page" data-theme="d">
+    <%= render "layouts/navigation_panel" %>
+    <%= render "layouts/notification_panel" %>
+    <%= render "layouts/header" %>
+      <% flash.each do |key, value| %>
+        <div class="flash <%= key %>"><%= value %></div>
+      <% end %>
+      <% flash.discard %>
+      <div data-role="content" class="content">
+        <%= yield %>
+      </div>
+
+    <%= render "layouts/footer" %>
+
+  </div>
+</body>
+</html>

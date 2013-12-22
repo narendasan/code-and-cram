@@ -1,0 +1,14 @@
+<%= render "shared/error_messages", target: @page %>
+
+<div data-role="content" class="white" data-theme="e">
+  <div class="card-white">
+    <h1>New Static Page</h1>
+
+    <%= nested_form_for(@page, url: static_pages_path(@parent), html: { multipart: true }) do |f| %>
+    <%= render partial: "static_pages/form", locals: { f: f, page: @page } %>
+    <% end %>
+
+    <%= render "form_instructions" %>
+
+  </div>
+</div>

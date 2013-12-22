@@ -1,0 +1,115 @@
+<%- content_for :head do -%>
+<meta name="description" content="Fairview High School is a four-year high school dedicated to advanced education, technology, arts, and recreation. Located in Boulder, CO, it is known statewide for its expert faculty and exceptional student body." />
+<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+<%= auto_discovery_link_tag(:atom, feed_url(@feed, :atom), { title: "Fairview #{@feed.title}" }) %>
+<%- end -%>
+
+<% if signed_in? %>
+  <%- @sub_links = sub_links_for(current_user.staff? ? :staff_dashboard : :student_dashboard) -%>
+<% else %>
+  <% @current = "Announcements" %>
+  <%- @sub_links = sub_links_for :welcome -%>
+<% end %>
+<% @quick_links = quick_links_for :welcome %>
+
+<section>
+  <div class="box-container-medium">
+    <h1>
+      Announcements
+      <% if @feed_access %>
+      <%= link_to "New Announcement", new_feed_announcement_path(@feed), class: "h1-button" %>
+      <% end %>
+    </h1>
+    <ul class="boxes">
+    <%- @feed.announcements.upcoming.each do |announcement| -%>
+    <%= content_tag "li", render(announcement) -%>
+    <%- end -%>
+    </ul>
+    <div class="show-more"><%= link_to "More Announcements", feed_path(@feed) %></div>
+  </div>
+</section>
+<section id="sidebar">
+  <div class="box">
+    <div class="box inner">
+      <h2>Infinite Campus Portal</h2>
+      <form id="ic" method="post" action="https://portal.bvsd.org/campus/verify.jsp">
+        <input type="hidden" name="appName" value="boulder">
+        <section>
+          <input type="text" name="username" placeholder="username" spellcheck="false" autocomplete="off" value="<%= current_user.try(:ic_username) %>">
+          <input type="password" name="password" placeholder="password" autocomplete="off">
+        </section>
+        <div class="submit wrapper"><input type="submit" value="Log In"></div>
+        <div class="clear"></div>
+      </form>
+    </div>
+  </div>
+  <div class="box">
+    <div class="box inner">
+      <h2>Online Payments</h2>
+        <a href="https://fairviewhigh.revtrak.net/" class="button">Athletic Registration<br/>
+        Required School Fees<br/>
+        Additional Items and Events</a>
+    </div>
+  </div>
+  <% if signed_in? %>
+  <div class="box my-classes">
+    <div class="box inner">
+      <h2>My Classes</h2>
+      <% if current_user.class_page_subscriptions.count > 0 %>
+      <ul<%= " class='fuller-list'" if current_user.class_page_subscriptions.count < 4 %>>
+        <% current_user.class_page_subscriptions.includes(:staff_page).each do |page| %>
+        <li><a href="<%= url_for staff_page_class_page_path(page.staff_page, page) %>">
+          <span class="class"><%= page.name %></span>
+          <span class="staff"><%= page.staff_page.last_name %></span>
+        </a></li>
+        <% end %>
+      </ul>
+      <% else %>
+      <p><%= link_to "Subscribe to your classes", staff_directory_path %> to display them here.</p>
+      <% end %>
+      <% if current_user.class_page_subscriptions.count < 4 && current_user.class_page_subscriptions.count > 0 && current_user.activity_page_subscriptions.count > 0 %>
+      <div id="sections-separator"></div>
+      <% end %>
+      <% if current_user.activity_page_subscriptions.count > 0 %>
+      <h2 class="activities-box-heading">My Activities</h2>
+      <ul<%= " class='fuller-list'" if current_user.activity_page_subscriptions.count < 4 %>>
+        <% current_user.activity_page_subscriptions.each do |page| %>
+        <li><a href="<%= url_for activity_page_path(page) %>">
+          <span class="class"><%= page.name %></span>
+        </a></li>
+        <% end %>
+      </ul>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+  <div class="box calendar">
+    <div class="box inner">
+      <h2>Upcoming Events</h2>
+      <ul class="calendar">
+        <% @upcoming_events.each do |event| %>
+        <li>
+          <div class="date"><span class="month"><%= event.start_time.strftime("%b") %></span> <span class="day"><%= event.start_time.strftime("%d") %></span></div>
+          <% if event.all_day %><p class="all-day"><% else %><p><% end %><%= event.name %></p>
+          <% unless event.all_day %>
+          <p class="time"><%= event.start_time.strftime("%l:%M %p") %></p>
+          <% end %>
+        </li>
+        <% end %>
+      </ul>
+      <%= link_to "More", school_calendar_path, class: "grey-button" %>
+    </div>
+  </div>
+  <div class="box calendar hidden">
+    <div class="box inner">
+      <h2>Sports</h2>
+      <ul class="calendar">
+        <li>
+          <div class="date"><span class="month">Dec</span> <span class="day">06</span></div>
+          <p>Fairview Festival &mdash; Basketball</p>
+          <p class="time">3:00 PM</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

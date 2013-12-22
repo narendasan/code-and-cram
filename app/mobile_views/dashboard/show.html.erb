@@ -1,0 +1,56 @@
+<div class="card">
+  <h2>Infinite Campus Portal</h2>
+    <% if request.remote_ip =~ /^161\.97\./ %>
+      <form id="ic" method="post" action="http://portal.bvsd.org/campus/verify.jsp">
+    <% else %>
+      <form id="ic" method="post" action="https://portal.bvsd.org/campus/verify.jsp">
+    <% end %>
+    <input type="hidden" name="appName" value="boulder">
+    <div class="field ui-hide-label" data-role="fieldcontain" data-theme="c">
+      <label for="username">Username</label>
+      <input id="username" type="text" name="username" placeholder="username" spellcheck="false" autocomplete="off" value="<%= current_user.try(:ic_username) %>" data-theme="c" >
+    </div>
+    <div class="field ui-hide-label" data-role="fieldcontain" data-theme="c">
+      <label for="username">Password</label>
+      <input id="password" type="password" name="password" placeholder="password" autocomplete="off" data-theme="c">
+    </div>
+    <div class="submit wrapper">
+      <input type="submit" data-theme="c" value="Log In" />
+    </div>
+  </form>
+</div>
+
+<div class="card">
+  <ul data-role="listview" data-divider-theme="a" data-inset="true" data-icon="false">
+    <li data-theme="b">
+      <%= link_to "Staff Directory", staff_directory_path, data: { transition: "slide" } %>
+    </li>
+  </ul>
+  <% if signed_in? && current_user.class_page_subscriptions.count > 0 %>
+    <ul class="files" data-role="listview" data-divider-theme="b" data-inset="true" <%= " class='fuller-list'" if current_user.class_page_subscriptions.count < 4 %>>
+      <div class="header">
+        <h4 style="font-family: 'Lato', sans-serif !important; font-weight: 300;"> My Classes</h4>
+      </div>
+      <% current_user.class_page_subscriptions.includes(:staff_page).each do |page| %>
+        <li data-theme="a">
+          <a href="<%= url_for staff_page_class_page_path(page.staff_page, page) %>">
+            <%= page.name %>
+            <%= page.staff_page.last_name %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+ </div>
+
+<div class="card">
+  <h2>Announcements</h2>
+  <div data-role="collapsible-set">
+    <%- @feed.announcements.upcoming.each do |announcement| -%>
+      <%= content_tag "div", render(announcement) -%>
+    <%- end -%>
+  </div>
+  <div class="show-more">
+    <%= link_to 'More Announcements', @feed %>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="field">
+  <%= f.label :name %>
+  <%= f.text_field :name, class: "annotated" %>
+</div>
+<% if params[:calendar_name] == "School Calendar" %>
+<%= f.hidden_field :context_shown, value: true %>
+<div class="field">
+  <%= f.select :context, [['Athletics', 'athletics'], ['Fine Arts', 'fine-arts'], ['Community', 'community']], prompt: "Select Calendar" %>
+</div>
+<% end %>
+<div class="field">
+  <%= f.label :all_day %>
+  <%= f.check_box :all_day, class: "all_day" %>
+</div>
+<div id="event_start_time" class="field">
+  <%= f.label :start_time %>
+  <%= f.date_select :start_time, start_year: Time.now.year,
+                                 end_year: Time.now.year + 1,
+                                 order: [:month, :day, :year] %>
+  <%- if @event.all_day == true || @event.all_day == nil -%>
+  <span class="time-select hidden">
+  <%- else -%>
+  <span class="time-select">
+  <%- end -%>
+    &mdash; <%= f.time_select :start_time,
+                              minute_step: 15,
+                              ignore_date: true,
+                              default: { hour: "08", minute: "00" },
+                              ampm: true %>
+  </span>
+</div>
+<%- if @event.end_time == @event.start_time -%>
+<a href="#" id="event_add_end_time" class="form-toggle">Add end time to event</a>
+<div id="event_end_time" class="hidden field">
+<%- else -%>
+<div id="event_end_time" class="field">
+<%- end -%>
+  <%= f.label :end_time %>
+  <%= f.date_select :end_time, start_year: Time.now.year,
+                               end_year: Time.now.year + 1,
+                               order: [:month, :day, :year] %>
+  <%- if @event.all_day == true || @event.all_day == nil -%>
+  <span class="time-select hidden">
+  <%- else -%>
+  <span class="time-select">
+  <%- end -%>
+    &mdash; <%= f.time_select :end_time,
+                              minute_step: 15,
+                              ignore_date: true,
+                              ampm: true,
+                              default: { hour: "15", minute: "30" },
+                              ampm: true %>
+  </span>
+  <a href="#" id="event_remove_end_time" class="form-toggle">Remove end time</a>
+</div>
+<div class="field">
+  <%= f.label :location %>
+  <%= f.text_field :location, class: "annotated" %>
+</div>
+<div class="field">
+  <%= f.label :description %>
+  <%= f.text_area :description, class: "annotated" %>
+</div>
+<%= render "shared/privacy_fields", resource: "event", page: @page, f: f %>
+<div id="submit-container">
+  <div class="submit"><%= f.submit "Submit", data: { disable_with: 'Submitting...' } %></div>
+</div>

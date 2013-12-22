@@ -1,0 +1,35 @@
+<div data-role="panel" id="navigation-panel" data-position="left" data-display="overlay" data-theme="f">
+  <ul data-role="listview" data-theme="f" data-inset="false" data-icon="false">
+    <% if request.fullpath != root_path %>
+      <li data-theme="f">
+        <%= link_to "Home", root_path, data: { transition: "slide" } %>
+      </li>
+    <% end %>
+    <% if request.fullpath != staff_directory_path%>
+      <li data-theme="f">
+        <%= link_to "Staff Directory", staff_directory_path, data: { transition: "slide" } %>
+      </li>
+    <% end %>
+    <% if request.fullpath != feed_path(Feed.find_by_title("Announcements"))%>
+      <li data-theme="f">
+        <%= link_to "Announcements", feed_path(Feed.find_by_title("Announcements")), data: { transition: "slide" } %>
+      </li>
+    <% end %>
+
+       <!-- <li><a href="<%= url_for about_path %>"><b>About Fairview</b></a></li>
+        <li><a href="<%= url_for academics_path %>"><b>Academics</b></a></li>
+        <li><a href="<%= url_for activity_pages_path %>"><b>Athletics <i>&amp;</i> Activities</b></a></li>
+        <li><a>-->
+
+  </ul>
+  <br>
+  <ul data-role="listview" data-theme="f" data-inset="false" data-icon="false">
+    <li data-theme="f">
+      <% if signed_in? %>
+        <%= link_to "Sign Out", destroy_session_path, method: :delete, id: "logout", class: "header-icon" %>
+      <% elsif request.fullpath != new_session_path %>
+        <%= link_to "Sign In", new_session_path %>
+      <% end %>
+    </li>
+  </ul>
+</div>

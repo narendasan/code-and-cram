@@ -1,0 +1,9 @@
+<%= render "shared/error_messages", target: @event %>
+
+<h4 class="black"><%= @event.calendar.name %> &ndash; New Event<%= link_to "Go Back", calendar_path(@event), class: "back-button" %></h1>
+
+<%= form_for(@event, url: create_event_path(@calendar)) do |f| %>
+<%= render partial: "events/form", locals: { f: f } %>
+<% end %>
+
+<%= render "form_instructions" %>

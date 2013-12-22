@@ -1,0 +1,40 @@
+<%- @sub_links = sub_links_for :dashboard -%>
+
+<div class="box-container-full">
+  <h1>Upcoming Assignments &ndash; All Classes</h1>
+  <ul class="assignments">
+  <% @class_pages.each do |class_page| %>
+    <% if class_page.assignments.upcoming.soon.any? %>
+      <p class="label">
+      <%= class_page.name %>
+      <span>
+        [<em>due this week</em>]
+      </span>
+      <%= link_to "More", staff_page_class_page_assignments_path(class_page.staff_page, class_page) %></p>
+        <% class_page.assignments.upcoming.soon.each do |assignment| %>
+        <%= render partial: "assignments/assignment", locals: { assignment: assignment } %>
+      <% end %>
+    <% elsif class_page.assignments.upcoming.any? %>
+      <p class="label"><%= class_page.name %><span>[<em>next 5 assignments</em>]</span><%= link_to "More", staff_page_class_page_assignments_path(class_page.staff_page, class_page) %></p>
+      <% class_page.assignments.upcoming.first(5).each do |assignment| %>
+        <%= render partial: "assignments/assignment", locals: { assignment: assignment } %>
+      <% end %>
+    <% end %>
+  <% end %>
+  </ul>
+</div>
+<% unless current_user.subscription_past_assignments_count == 0 %>
+<div class="box-container-full">
+  <h1>Past Assignments &ndash; All Classes</h1>
+  <ul class="assignments past">
+  <% @class_pages.each do |class_page| %>
+    <% if class_page.assignments.past.any? %>
+      <p class="label"><%= class_page.name %><span>[<em>last 5 assignments</em>]</span><%= link_to "More", staff_page_class_page_assignments_path(class_page.staff_page, class_page) %></p>
+      <% class_page.assignments.past.first(5).each do |assignment| %>
+        <%= render partial: "assignments/assignment", locals: { assignment: assignment } %>
+      <% end %>
+    <% end %>
+  <% end %>
+  </ul>
+</div>
+<% end %>

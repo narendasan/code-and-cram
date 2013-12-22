@@ -1,0 +1,5 @@
+<%= render "shared/error_messages", target: @folder %>
+
+<h4 class="black"><%= @page.name %> &ndash; New Folder<%= link_to "Go Back", folder_path(@page, @parent), class: "back-button" %></h4>
+
+<%= render "form" %>

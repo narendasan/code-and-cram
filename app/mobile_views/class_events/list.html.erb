@@ -1,0 +1,25 @@
+<div class="card">
+  <h1>
+    Calendar
+  </h1>
+  <h3><%= link_to "Grid View", staff_page_class_page_calendar_path(@calendar.staff_page, @calendar), class: "h1-button" %></h3>
+  <% if @events.upcoming.count > 0 %>
+    <%= render partial: "events/upcoming_list", locals: { events: @events } %>
+  <% else %>
+    <div class="empty-container">
+      <%= image_tag "icon-calendar.png", alt: "", class: "class_page_overview_icon" %>
+      <% if access(@calendar) %>
+      <p><%= @events.count == 0 ? "You have not created any events yet." : "Your class has no upcoming events." %></p>
+      <% else %>
+      <p>This class doesn't have any <%= @events.count == 0 ? "events yet" : "upcoming events" %>.</p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @events.past.count > 0 %>
+  <div class="box-container-large">
+    <h3>Past Events</h3>
+    <%= render partial: "events/past_list", locals: { events: @events } %>
+  </div>
+  <% end %>
+</div>

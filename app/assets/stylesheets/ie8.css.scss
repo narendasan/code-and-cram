@@ -1,0 +1,55 @@
+@import "compass";
+
+#counseling-container header {
+  background-image: image-url("masthead-counseling.png");
+}
+
+#container header {
+  background-image: image-url("masthead.jpg");
+}
+
+html {
+  background: #444 image-url("embed/noise.png") fixed;
+}
+
+.box-container-full {
+  background: image-url("embed/box-container-full.png") repeat-y;
+}
+
+.box-container-large.classroom {
+  background: image-url("linen.png") repeat;
+
+  h1 {
+    background: image-url("classroom-header.png") no-repeat;
+  }
+}
+
+.resource-selector {
+  &#discussions-selector {
+    div {
+      background: image-url("classroom-icon-discussions-large.png") no-repeat center;
+    }
+  }
+
+  &#questions-selector {
+    div {
+      background: image-url("classroom-icon-questions-large.png") no-repeat center;
+    }
+  }
+
+  &#flashcards-selector {
+    div {
+      background: image-url("classroom-icon-flashcards-large.png") no-repeat center;
+    }
+  }
+
+  &#quizzes-selector {
+    div {
+      background: image-url("classroom-icon-quizzes-large.png") no-repeat center;
+    }
+  }
+
+  p {
+    background: image-url("classroom-resource-name-bg.png") no-repeat top left;
+  }
+}

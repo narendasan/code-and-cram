@@ -1,0 +1,20 @@
+<div class="announcement" id="announcement_<%= announcement.id %>">
+<%- if announcement.important == true -%>
+  <div class="info important" data-role="collapsible" data-theme="b">
+    <h3>
+      <span class="important" style="float:left; margin-right:10px; padding-left:0px;">
+        <%= image_tag "embed/alert.png" %>
+      </span>
+
+<%- else -%>
+  <div data-role="collapsible" data-theme="a" class="info">
+    <h3>
+<%- end -%>
+
+      <span class="title"><%= announcement.title %></span>
+    </h3>
+    <div class="markdown">
+      <%= markdown(announcement.contents).html_safe %>
+    </div>
+  </div>
+</div>

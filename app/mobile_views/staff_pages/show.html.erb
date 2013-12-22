@@ -1,0 +1,91 @@
+<div>
+  <div class="card">
+    <div>
+      <h1 class="double">
+        <%= @staff.full_name %>
+      </h1>
+      <h3>
+        <% if @staff.administrator? %>
+          <span>Administrator</span>
+         <% elsif @staff.counselor? %>
+          <span>Counselor</span>
+        <% elsif @staff.support? %>
+          <span>Support Staff</span>
+         <% elsif @staff.department_page %>
+          <span><%= @staff.department_page.name %> Department</span>
+         <% else %>
+          <span>Unaffiliated Teacher</span>
+        <% end %>
+      </h3>
+    </div>
+
+    <div style="text-align: center;">
+      <div id="staff-photo">
+        <%= image_tag @staff.staff_photo.url(:full), width: "194", alt: "#{@staff.full_name}" %>
+      </div>
+      <p id="staff-email"><a href="mailto:<%= @staff.email %>"><%= @staff.email %></a></p>
+      <p id="staff-phone"><%= @staff.phone %></p>
+      <p id="staff-office">Office: <%= @staff.office %></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="condence">
+      <div class="header">
+        <h4>Schedule</h4>
+      </div>
+      <% unless @staff.schedule.nil? %>
+        <%- @staff.schedule.split("\n").each_with_index do |period, num| -%>
+          <%- unless period.nil? -%>
+            <li class="list">
+              <span>0<%= num + 1 %></span>
+              <%= period.strip %>
+            </li>
+          <%- end -%>
+        <%- end -%>
+      <% end %>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <ul id="class-list" data-role="listview" data-divider-theme="a" data-inset="true">
+      <div class="header">
+        <h4>Classes</h4>
+      </div>
+      <%- @staff.class_pages.order(:display_order).each do |class_page| -%>
+        <li>
+          <a href="<%= url_for [@staff, class_page] %>">
+            <div></div>
+            <span><%= class_page.name %></span>
+          </a>
+         </li>
+      <%- end -%>
+      <%- @staff.class_page_links.each do |class_page_link| -%>
+        <li>
+          <a href="<%= class_page_link.url %>">
+            <div></div>
+            <span><%= class_page_link.name %></span>
+          </a>
+        </li>
+      <%- end -%>
+    </ul>
+  </div>
+
+  <% if @staff.links.count > 0 %>
+  <div class="card">
+    <div class="condence">
+      <ul data-role="listview" data-divider-theme="b">
+        <div class="header">
+          <h4>Resources</h4>
+        </div>
+        <% @staff.links.each do |link| %>
+          <li data-theme="a">
+            <a href="<%= link.url %>"><%= link.name %></a>
+            </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <% end %>
+</div>

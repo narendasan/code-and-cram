@@ -1,0 +1,10 @@
+<%- @crumbs = crumbs_for @department_page -%>
+<div class="box-container-full staff-directory-box">
+  <h1>
+    <%= @department_page.name %>
+  </h1>
+  <%= simple_format @department_page.contents %>
+
+  <h2>Teachers</h2>
+  <%= render partial: "staff_pages/staff_pages", object: @department_page.staff_pages %>
+</div>

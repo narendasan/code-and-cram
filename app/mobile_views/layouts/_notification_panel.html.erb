@@ -1,0 +1,8 @@
+<% if signed_in? %>
+  <div data-role="panel" id="notifications-panel"  data-position="right" data-display="overlay">
+    <h2 class="title">Notifications</h2>
+    <ul id="notification-list">
+      <%= image_tag("notifications-loading.gif", size: "46x46", id: "notifications-loading") %>
+    </ul>
+  </div>
+<% end %>

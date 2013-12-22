@@ -1,0 +1,26 @@
+<div class="footer-wrapper">
+  <div data-theme="e" data-position="fixed" data-role="footer" align="center">
+    <%= link_to_function "Back", "history.back()" %>
+    <%= link_to "Desktop", root_url(mobile: 0), class: "button", rel: "external" %>
+    <a class="button" href="http://www.bvsd.org">BVSD</a>
+    <%= link_to "Help", emails_path, class: "button", rel: "external" %>
+    <!-- <%= link_to "About", website_support_path, class: "button", rel: "external"  %> -->
+    <br>
+    <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">&copy; 2011&ndash;<%= Time.now.strftime("%Y") %> Fairview High School</a>
+    </span>
+    <br>
+  </div>
+</div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-18413513-3', 'fairviewhs.org');
+  ga('send', 'pageview');
+</script>
+
+<!-- © 2013 Fairview High School Web Team 2011-2013 Senior Members & Assignees. All rights reserved. Licensed for use under Creative Commons NCD 3.0 -->

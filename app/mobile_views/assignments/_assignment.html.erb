@@ -1,0 +1,27 @@
+<%- if human_due_date(assignment.due) == "Today" || human_due_date(assignment.due) == "Tomorrow" -%>
+<div data-role="collapsible" data-theme="b" class="highlighted<%= " nopointer" if assignment.description.blank? %>">
+  <h3>
+    <span class="important" style="float:left; margin-right:10px; margin-left:0px;">
+      <%= image_tag "embed/important.png" %>
+    </span>
+<%- elsif assignment.description.blank? -%>
+<div data-role="collapsible" data-theme="d" >
+  <h3>
+<% else %>
+<div data-role="collapsible" data-theme="d" >
+  <h3>
+<%- end -%>
+     <span class="due-date">
+      Due <%= human_due_date(assignment.due) %>
+    </span>
+     <span class="name">
+      <%= assignment.name %>
+      <%= image_tag("embed/icon-description.png", class: "description-icon", title: "Click to show description") if !assignment.description.blank? %><%= image_tag("embed/icon-lock.png", class: "lock-icon") if assignment.private_item %>
+    </span>
+  </h3>
+  <% unless assignment.description.blank? %>
+    <div class="assignment-description hidden">
+       <%= markdown(assignment.description).html_safe %>
+    </div>
+   <% end %>
+</div>

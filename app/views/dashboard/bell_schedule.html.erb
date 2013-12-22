@@ -1,0 +1,47 @@
+<% if signed_in? %>
+<% @sub_links = sub_links_for :dashboard %>
+<% else %>
+<% @sub_links = sub_links_for :welcome %>
+<% end %>
+
+<h2>Bell Schedule
+<a href="/bell-schedule-spring-2013.pdf" class="h1-button bell-sched-btn">Print Bell Schedule</a>
+</h2>
+
+<%# Regular schedule: bell_normal
+    Block Odd: bell_block_odd
+    Block Even: bell_block_even
+    Short Assembly (Mid-day): bell_short_assembly_mid
+    Long Assembly (Mid-day): bell_long_assembly_mid
+    Short Assembly (End-of-day): bell_short_assembly_end
+    Long Assembly (End-of-day): bell_long_assembly_end
+    TCAP Testing Even: bell_tcap_even
+    TCAP Testing Odd: bell_tcap_odd
+%>
+
+<table id="bell-schedule">
+  <tr>
+    <%= content_tag :th, content_tag(:p, "Monday"), class: ('today' if @time.wday == 1) %>
+    <%= content_tag :th, content_tag(:p, "Tuesday"), class: ('today' if @time.wday == 2) %>
+    <%= content_tag :th, content_tag(:p, "Wednesday"), class: ('today' if @time.wday == 3) %>
+    <%= content_tag :th, content_tag(:p, "Thursday"), class: ('today' if @time.wday == 4) %>
+    <%= content_tag :th, content_tag(:p, "Friday"), class: ('today' if @time.wday == 5) %>
+  </tr>
+  <tr>
+    <%= content_tag :td, class: ('today' if @time.wday == 1) do %>
+      <%= render "bell_normal", locals: { time: @time } %>
+    <% end %>
+    <%= content_tag :td, class: ('today' if @time.wday == 2) do %>
+      <%= render "bell_normal", locals: { time: @time } %>
+    <% end %>
+    <%= content_tag :td, class: ('today' if @time.wday == 3) do %>
+      <%= render "bell_block_odd", locals: { time: @time } %>
+    <% end %>
+    <%= content_tag :td, class: ('today' if @time.wday == 4) do %>
+      <%= render "bell_block_even", locals: { time: @time } %>
+    <% end %>
+    <%= content_tag :td, class: ('today' if @time.wday == 5) do %>
+      <%= render "bell_normal", locals: { time: @time } %>
+    <% end %>
+  </tr>
+</table>

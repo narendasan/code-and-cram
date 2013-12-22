@@ -1,0 +1,13 @@
+<div data-theme="b" data-position="fixed" data-role="header">
+  <a href="#navigation-panel" id="navigation" class="ui-btn-left header-icon" ><span class="ui-icon ui-icon-bars ui-icon-shadow"></span></a>
+  <h1 class="title-text">Fairview High</h1>
+
+  <% if signed_in? %>
+    <a href="#notifications-panel" id="notifications" class="ui-btn-right header-icon" data-user="<%= current_user.id %>">
+      <span id="unread-badge" class="ui-icon ui-icon-bars ui-icon-shadow"><%= current_user.notifications.unread.count unless current_user.notifications.unread.count == 0 %></span>
+    </a>
+  <% elsif request.fullpath != new_session_path %>
+    <%= link_to "Sign In", new_session_path, class: "header-icon, ui-btn-right" %>
+  <% end %>
+</div>
+

@@ -1,0 +1,7 @@
+<%= render "shared/error_messages", target: @attachment %>
+
+<h4 class="black">
+  <%= @page.name %> &ndash; Edit File<%= link_to "Go Back", folder_path(@page, @folder), class: "back-button" %>
+</h4>
+
+<%= render "attachment_form" %>

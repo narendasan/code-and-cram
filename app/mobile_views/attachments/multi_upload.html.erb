@@ -1,0 +1,75 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#attachment_upload').click(function(e) {
+      e.preventDefault();
+    });
+
+    $("#attachment_upload").uploadify({
+      swf: "/uploadify/uploadify.swf",
+      cancelImage: "/uploadify/uploadify-cancel.png",
+      uploader: "/upload_file",
+      checkExisting: false,
+      buttonImage: "<%= image_path "upload-button-sprite.png" %>",
+      removeCompleted: false,
+      width: 210,
+      height: 47,
+      auto: true,
+      multi: true,
+      preventCaching: false,
+      onUploadStart : function() {
+        window.onbeforeunload = function() {
+          return 'Uploads are in progress! Leaving this page prematurely will cause them to abort, which would be sad.'
+        }
+      },
+      onQueueComplete : function(file) {
+        alert(file.successful_uploads + ' files were uploaded successfully!');
+        window.onbeforeunload = null;
+      },
+      postData : {
+        remember_token: "<%= cookies[:remember_token] %>",
+        "<%= request_forgery_protection_token %>": "<%= form_authenticity_token %>",
+        "<%= key = Rails.application.config.session_options[:key] %>" : "<%= cookies[key] %>",
+        "attachable_id" : "<%= params[:attachable_id] %>",
+        "attachable_type" : "<%= params[:attachable_type] %>"
+      }
+    });
+
+  });
+</script>
+
+<h4 class="black">
+  <%= @page.name %> &ndash; Upload Multiple Files<%= link_to "Go Back", folder_path(@page, @attachment.attachable), class: "back-button" %>
+</h4>
+
+<% # attachment_array defined in helpers/attachments_helper.rb %>
+<%= form_for attachment_array(@folder, @attachment), html: { multipart: true } do |f| %>
+  <%- session_key = Rails.application.config.session_options[:key] -%>
+  <p class="instructions_inline">
+    Click the button below to select the files you wish to upload to the <%= @folder.name %> Folder.
+  </p>
+  <p class="instructions_inline footnote">
+    Only files in the same folder can be uploaded simultaneously. You may select as many files as you need to upload.
+  </p>
+  <div class="uploadify-field">
+    <%= f.file_field :file, id: "attachment_upload" %>
+  </div>
+<% end %>
+<div id="full-page-side-bar">
+  <p class="instructions">
+    Upload multiple PDFs, Word documents, PowerPoint presentations, images, or other documents <em>at the same time</em> to be accessible by your students.
+  </p>
+  <p class="instructions">
+    To customize the display names of each file, add descriptions, or set privacy controls, please return to the <%= link_to "#{@folder.name} Folder", folder_path(@page, @folder) %> and edit each file individually.
+  </p>
+  <p class="instructions">
+    If you want to upload files individually, you should visit the <%= link_to "upload single files page", new_attachment_path(@page, @folder) %>.
+  </p>
+  <p class="instructions">
+    <strong>
+      <em>
+        <br/>Need help?
+      </em>
+      <%= link_to "Contact the Web Team", emails_path %>.
+    </strong>
+  </p>
+</div>

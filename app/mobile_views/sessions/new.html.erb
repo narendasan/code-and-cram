@@ -1,0 +1,33 @@
+<div data-role="content" class="white" data-theme="e">
+  <div class="card-white">
+    <h1>Sign In</h1>
+
+    <%= form_for(:session, url: create_session_path, html: { id: "new_session", class: "full-page" }) do |f| %>
+      <%= hidden_field_tag :continue, params[:continue] || request.referer %>
+      <div class="field ui-hide-label" data-role="fieldcontain">
+        <%= f.label :email, "BVSD Email" %>
+        <%= f.email_field :email, class: "annotated email_autofill", value: @email, placeholder: "BVSD Email", autocomplete: "off", spellcheck: "false", required: true %>
+      </div>
+      <div class="field ui-hide-label" data-role="fieldcontain">
+        <%= f.label :password %>
+        <%= f.password_field :password, class: "annotated", autofocus: @email.present?, placeholder: "Password", required: true %>
+      </div>
+      <div id="submit-container" class="no-bg">
+        <div class="submit" style="text-shadow: none !important;"><%= f.submit "Sign in", data: { disable_with: 'Signing in...' } %></div>
+      </div>
+    <% end %>
+
+    <div id="full-page-side-bar">
+      <p class="instructions">Sign in to subscribe to classes and activities and see messages, assignments and events on a customized front page.</p>
+      <p class="instructions"><strong><%= link_to "Forgot your password?", request_reset_password_path(email: @email) %></strong></p>
+
+      <div id="session_email_annotation" class="annotation overlap">
+        <p>Your email must be your BVSD address. Student addresses should look like <span>jadams1776@bvsd.org</span> and staff addresses should resemble <span>abraham.lincoln@bvsd.org</span></p>
+      </div>
+
+      <div id="session_password_annotation" class="annotation overlap">
+        <p>Students: your default password is your first name (lowercase), with a hyphen and your grade number. Example: <span>william-10</span>. Be sure to change your password after signing in for the first time.</p>
+      </div>
+    </div>
+  </div>
+</div>

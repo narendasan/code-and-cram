@@ -1,0 +1,184 @@
+/* Copyright 2013 Fairview High School
+*Author: Naren Dasan
+*/
+
+$head-red: #b20202;
+$head-red-light: #bd5e5e;
+$link-color: #890000;
+$warning: #910000;
+
+$font-family: 'Lato', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue',
+  Helvetica, Arial, 'Lucida Grande', sans-serif;
+$font-weight: 300;
+
+@import "compass/css3/border-radius";
+
+@import "partials/mobile/header";
+@import "partials/mobile/sidebar";
+@import "partials/mobile/jquery_structure";
+@import "partials/mobile/jquery_theme";
+@import "partials/mobile/calendars";
+@import "partials/mobile/add2home";
+
+/* @import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900); */
+
+html {
+	font-family: $font-family !important;
+  font-weight: $font-weight;
+	text-shadow: none !important;
+}
+
+.bg {
+
+}
+
+.footer-wrapper {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+
+.content {
+  margin-bottom: 50px;
+  margin-top: 5px;
+}
+
+.hidden {
+  text-align: left;
+  margin-left: 30px;
+}
+
+.contact_annotated {
+  height: 100px;
+}
+
+.list {
+  list-style-type: none;
+}
+
+.content h1,h2,h3 {
+  color: #960404;
+  font-family: $font-family !important;
+  font-weight: $font-weight;
+}
+
+
+
+input {
+  background-color: #ffffff;
+  color: #000;
+  text-shadow: none !important;
+}
+
+::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder { /* WebKit browsers */
+  text-shadow: none;
+}
+
+.condence {
+  margin: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+a {
+	 text-shadow: none !important;
+}
+
+.card {
+  background-color: #F4F4F4;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-shadow: 2px 2px 1px #E3E3E3;
+
+  a,p,li {
+    font-size: 1em;
+  }
+
+  h1,h2,h3,h4 {
+    text-align: left;
+    text-shadow: none;
+  }
+
+  h1,h2,h3,h4,a,p,li {
+    text-shadow: 0 /*{a-bar-shadow-x}*/ 0px /*{a-bar-shadow-y}*/ 0px /*{a-bar-shadow-radius}*/ #444444 /*{a-bar-shadow-color}*/;
+  }
+}
+
+.card-white {
+  background-color: #F4F4F4;
+  padding: 10px;
+  margin: -20px;
+
+  h1,h2,h3,h4 {
+    text-align: center;
+    text-shadow: none;
+  }
+}
+
+.white {
+	border: #F4F4F4;
+  padding-bottom: -10px;
+   box-shadow: 2px 2px 1px #E3E3E3;
+   text-shadow:none;
+}
+
+.header {
+  height: 42px;
+  border: 1px solid #9f0000; /*{a-bar-border}*/
+  background-image: url('../images/bg.png') repeat; /*{a-bar-background-color}*/
+  color: #ffffff; /*{a-bar-color}*/
+  font-weight: bold;
+  text-shadow: 0 /*{a-bar-shadow-x}*/ 1px /*{a-bar-shadow-y}*/ 1px /*{a-bar-shadow-radius}*/ #444444 /*{a-bar-shadow-color}*/;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ae0000 /*{a-bar-background-start}*/), to(#ae0000 /*{a-bar-background-end}*/)); /* Saf4+, Chrome */
+  background-image: -webkit-linear-gradient(#ae0000 /*{a-bar-background-start}*/, #ae0000 /*{a-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+  background-image:    -moz-linear-gradient(#ae0000 /*{a-bar-background-start}*/, #ae0000 /*{a-bar-background-end}*/); /* FF3.6 */
+  background-image:     -ms-linear-gradient(#ae0000 /*{a-bar-background-start}*/, #ae0000 /*{a-bar-background-end}*/); /* IE10 */
+  background-image:      -o-linear-gradient(#ae0000 /*{a-bar-background-start}*/, #ae0000 /*{a-bar-background-end}*/); /* Opera 11.10+ */
+  background-image:         linear-gradient(#ae0000 /*{a-bar-background-start}*/, #ae0000 /*{a-bar-background-end}*/);
+
+  h4 {
+    postion-relative: top;
+    padding-left: 15px;
+    vertical-align: text-top !important;
+    margin-top: 10px;
+    margin-bottom: auto;
+  }
+}
+
+.flash {
+  border: 1px solid #000;
+  padding: 6px 8px 6px 8px;
+  margin-bottom: 2px;
+  text-align: center;
+  color: #222;
+  text-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px;
+}
+
+.success {
+  background-color: #72c75d;
+  color: #000;
+}
+
+.error {
+  background-color: #ed6b6b;
+  font-weight: bold;
+}
+
+.notice {
+  background-color: #e8dc8b;
+}
+
+.folder img {
+  position: inline;
+}
+
+h2.page-path {
+  display: inline;
+}
+
+div.field {
+  border: none;
+  padding: 0;
+  margin: 1em 0;
+}
+

@@ -1,0 +1,36 @@
+<div class="card">
+  <h1>
+    <%= @folder.name %>
+  </h1>
+  <h3 class="file-path">
+    <% @folder.path.each do |folder| %>
+      <%= link_to folder.name, folder_path(@page, folder) %> /
+    <% end %>
+  </h3>
+  <%- if @attachments.length > 0 || @folder.children.count > 0 -%>
+  <div class="condence">
+    <ul data-role="listview" class="files">
+    <% @folder.children.by_name.each do |folder| %>
+      <li data-theme="b">
+        <a class="folder" href="<%= url_for folder_path(@page, folder) %>"><%= folder.name %></a>
+        <span> &mdash; <%= signed_in? && current_user.subscribed?(@page) || access(@page) ? pluralize(folder.attachments.count + folder.children.count, 'item') : pluralize(folder.attachments.private_filtered.count + folder.children.count, 'item') %></span>
+      </li>
+    <% end %>
+    <%- @attachments.by_name.each do |attachment| -%>
+      <li class="attachment-item<%= " nopointer" if attachment.description.blank? %>">
+        <%= render partial: 'attachments/attachment', locals: { attachment: attachment } %>
+      </li>
+    <%- end -%>
+    </ul>
+  </div>
+  <%- else -%>
+  <div class="empty-container">
+    <%= image_tag "icon-files.png", alt: "", class: "class_page_overview_icon" %>
+    <% if access(@folder) %>
+    <p>You have not uploaded any files here yet.</p>
+    <% else %>
+    <p>This page doesn't have any files yet.</p>
+    <% end %>
+  </div>
+  <%- end -%>
+</div>

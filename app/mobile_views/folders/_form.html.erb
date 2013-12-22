@@ -1,0 +1,18 @@
+<% # form_array is defined in helpers/folders_helper.rb %>
+<%= form_for(folder_inheritance(@page, @folder)) do |f| %>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <%= f.hidden_field :parent_id %>
+  <%= f.hidden_field :folderable_id %>
+  <%= f.hidden_field :folderable_type %>
+  <div id="submit-container" class="no-bg">
+    <div class="submit"><%= f.submit "Submit", data: { disable_with: 'Submitting...' } %></div>
+  </div>
+<% end %>
+
+<div id="full-page-side-bar">
+  <p class="instructions">Create folders to organize files on your pages. Folder names should reflect the type of content users can expect to find inside.</p>
+  <p class="instructions"><strong><em><br />Need help?</em> <%= link_to "Contact the Web Team", emails_path %>.</strong></p>
+</div>

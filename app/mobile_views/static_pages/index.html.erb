@@ -1,0 +1,24 @@
+<div class="box-container-full">
+  <h1>
+    <%= @parent ? @parent.name : "Static Page" %> Index
+    <%= link_to "Create New Static Page", new_static_page_path(@parent), class: "h1-button" %>
+  </h1>
+  <table id="static-page-index" data-update-url="<%= sort_static_pages_path %>">
+    <thead><tr>
+      <th id="edit-column"></th>
+      <th id="delete-column"></th>
+      <th id="url-column">URL</th>
+      <th id="name-column">Name</th>
+    </tr></thead>
+    <tbody>
+    <%- @pages.each do |page| -%>
+      <%= content_tag_for :tr, page, style: "cursor:move" do %>
+        <td><%= link_to "Edit", edit_static_page_path(page) %></td>
+        <td><%= link_to "Delete", page, method: :delete, data: { confirm: "Are you sure you to delete the page '#{page.name}'? This action cannot be undone. #{(pluralize(page.descendants.count, "descendant") + " of this page will also be deleted.") if page.has_children?}" } %></td>
+        <td><a href="<%= url_for page %>"><%= page.url %></a></td>
+        <td><%= page.name %></td>
+      <% end %>
+    <%- end -%>
+    </tbody>
+  </table>
+</div>

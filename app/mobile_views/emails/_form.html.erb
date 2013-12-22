@@ -1,0 +1,21 @@
+<%= form_for @email, url: { action: "create" }, html: { method: :post } do |f| %>
+  <p class="ui-hide-label" data-role="fieldcontain">
+    <%= f.label :sender_name, "Your name" %>
+    <%= f.text_field :sender_name, class: "contact", placeholder: "Your name" %>
+  </p>
+  <p class="ui-hide-label" data-role="fieldcontain">
+    <%= f.label :email, "Your email address" %>
+    <%= f.text_field :email, class: "contact annotated", placeholder: "Your email address" %>
+  </p>
+  <p class="ui-hide-label" data-role="fieldcontain">
+    <%= f.label :subject, "Message subject" %>
+    <%= f.text_field :subject, class: "contact", placeholder: "Message subject" %>
+  </p>
+  <p class="ui-hide-label" data-role="fieldcontain">
+    <%= f.label :contents, "Message contents", class: "ui-input-text" %>
+    <%= f.text_area :content, class: "contact_annotated", placeholder: "Message contents" %>
+  </p>
+  <div id="submit-container">
+    <div class="submit" style="text-shadow: none !important;" ><%= f.submit "Send", data: { disable_with: 'Sending...' } %></div>
+  </div>
+<% end %>

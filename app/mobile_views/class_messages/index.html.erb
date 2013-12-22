@@ -1,0 +1,18 @@
+<div class="card" style="hieght:90%;">
+    <h1>
+      Messages
+    </h1>
+  <%- if @messages.length > 0 -%>
+  <div class="messages" data-role="collapsible-set">
+    <%- @messages.each do |message| -%>
+    <%= render partial: "messages/message", locals: { message: message } %>
+    <%- end -%>
+  </div>
+  <%- else -%>
+  <div class="empty-container">
+    <%= image_tag "icon-messages.png", alt: "", class: "class_page_overview_icon" %>
+    <p>This class doesn't have any messages yet.</p>
+    <% end %>
+  </div>
+</div>
+

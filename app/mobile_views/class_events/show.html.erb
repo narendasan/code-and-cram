@@ -1,0 +1,9 @@
+<% @crumbs = crumbs_for(@event) %>
+
+<div class="box-container-full">
+  <h1><%= @event.class_page.name %>: <%= @event.name %></h1>
+  <p><b>Starts at:</b> <%= @event.start_time %></p>
+  <p><b>Ends at:</b> <%= @event.end_time %></p>
+  <p><b>Location:</b> <%= @event.location %></p>
+  <p><b>Description:</b> <%= @event.description %></p>
+</div>

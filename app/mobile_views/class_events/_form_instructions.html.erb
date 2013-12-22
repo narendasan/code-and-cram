@@ -1,0 +1,19 @@
+<div id="full-page-side-bar">
+  <p class="instructions">Use events to keep track of your class schedule, plan tests, mark special occasions, and record daily activities. Students who subscribe to your class will automatically see this event added to their calendar on the Fairview website.</p>
+  <p class="instructions">If you want to indicate due dates for homework, please consider <%= link_to "creating an assignment", new_staff_page_class_page_assignment_path(@class_page.staff_page, @class_page) %> instead.</p>
+  <p class="instructions">We're working on pairing events and assignments so that due dates appear in your calendar as well, but that functionality isn&rsquo;t ready yet.</p>
+  <p class="instructions"><strong><em><br />Need help?</em> <%= link_to "Contact the Web Team", emails_path %>.</strong></p>
+
+  <div id="class_event_name_annotation" class="annotation overlap">
+    <p>Please keep event names brief. Names that are too long may not display in some parts of the site.</p>
+    <p>If you want to provide details, please put them in the description instead.</p>
+  </div>
+
+  <div id="class_event_location_annotation" class="annotation overlap">
+    <p>If left blank, the location will default to <span>Fairview High School</span>If you want to specify a unique location, please do so.</p>
+  </div>
+
+  <div id="class_event_description_annotation" class="annotation overlap">
+    <%= render "shared/markup_annotation_mini" %>
+  </div>
+</div>

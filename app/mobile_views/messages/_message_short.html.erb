@@ -1,0 +1,10 @@
+<div data-role="collapsible" data-theme="a" class="info">
+  <h3>
+    <span class="title">
+      <%= message.title %> <%= image_tag("embed/icon-lock.png", class: "lock-icon") if message.private_item %>
+    </span>
+  </h3>
+  <p>
+    <%= simple_format markdown(truncate_words(message.contents, 500, messages_path(message))) %>
+  </p>
+</div>

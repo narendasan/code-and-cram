@@ -1,0 +1,43 @@
+<div class="card">
+  <h1>
+    <%= @calendar.name %>
+  </h1>
+  <h3>
+    <%= link_to "Back", calendar_path(@event) %>
+  </h3>
+  <p id="event-name"><%= @event.name %></p>
+  <p class="event-label">Date:
+    <b><%= @event.start_time.strftime("%A, %B %d") %>
+    <% unless @event.start_date == @event.end_date %>
+      <em>through</em> <%= @event.end_time.strftime("%A, %B %d") %>
+    <% end %></b>&ensp;&ndash;&ensp;
+    <span><%= relative_time(@event.start_time) %></span>
+  </p>
+  <br>  <br>
+
+  <% unless @event.all_day %>
+  <div id="event-time" class="event-info">
+    <p class="event-label">Time</p>
+    <p><%= @event.start_time.strftime("%l:%M %p") %>
+      <% if @event.start_date == @event.end_date && @event.start_time != @event.end_time %>
+        to <%= @event.end_time.strftime("%l:%M %p") %>
+      <% end %>
+    </p>
+  </div>
+  <% end %>
+
+  <% unless @event.location.nil? || @event.location.empty? %>
+  <div id="event-location" class="event-info">
+    <p class="event-label">Location</p>
+    <p><%= @event.location %></p>
+  </div>
+  <% end %>
+
+  <% unless @event.description.nil? || @event.description.empty? %>
+  <div id="event-description" class="event-info">
+    <p class="event-label">Description</p>
+    <div class="markdown"><%= markdown(@event.description).html_safe %></div>
+  </div>
+  <% end %>
+  <br>
+</div>

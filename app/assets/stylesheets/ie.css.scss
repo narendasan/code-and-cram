@@ -1,0 +1,50 @@
+@import "blueprint/ie";
+
+// To generate css equivalent to the blueprint css but with your configuration applied, uncomment:
+// +blueprint-ie
+
+// Recommended Blueprint configuration with scoping and semantic layout:
+body {
+  @include blueprint-ie(true);
+}
+
+section {
+  display: block;
+  float: left;
+}
+
+// Used in my-classes box for even li item right margin reduction
+.my-classes ul {
+  width: 206px !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#counseling-container #nav-tray {
+  background: #111;
+
+  ul {
+    &.active {
+      border-left: 1px solid #8c8c8c;
+      border-right: 1px solid #8c8c8c;
+
+      a {
+        color: #aaa;
+      }
+    }
+
+    li a {
+      color: #8c8c8c;
+
+      &.active {
+        color: #c8c8c8;
+      }
+    }
+  }
+}
+
+nav.micro ul#micro_nav_list li {
+  line-height: 0;
+}

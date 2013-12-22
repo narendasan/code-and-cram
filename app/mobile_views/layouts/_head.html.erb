@@ -1,0 +1,29 @@
+<head>
+  <meta charset="utf-8" />
+  <title>Fairview</title>
+
+  <%= stylesheet_link_tag "mobile" %>
+  <%= javascript_include_tag "mobile" %>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Fairview">
+
+  <!-- Do NOT use width=device width because it will letterbox viewport. -->
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <%= csrf_meta_tags %>
+
+  <!--iPhone and iPad Web App Startup Images -->
+
+  <!-- iPhone 3 and 4 Non-Retina -->
+  <%= favicon_link_tag 'mobile-logo.png', rel: 'apple-touch-icon', type: 'image/png' %>
+  <%= favicon_link_tag 'ios-startup.png', rel: 'apple-touch-startup-image', type: 'image/png', media: "(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" %>
+
+  <!-- iPhone 4 Retina -->
+  <%= favicon_link_tag 'mobile-logo@2x.png', rel: 'apple-touch-icon', type: 'image/png', sizes: "114x114" %>
+  <%= favicon_link_tag 'ios-startup@2x.png', rel: 'apple-touch-startup-image', type: 'image/png', media: "(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" %>
+
+  <!-- iPhone 5 Retina -->
+  <%= favicon_link_tag 'ios-startup-large@2x.png', rel: 'apple-touch-startup-image', type: 'image/png', media: "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" %>
+</head>

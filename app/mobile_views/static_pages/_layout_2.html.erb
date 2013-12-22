@@ -1,0 +1,15 @@
+<%= content_tag(:h2, @page.name) unless @page.hide_name %>
+<div class="markdown body-style"><%= markdown(@page.contents).html_safe %></div>
+<% if @folder && @folder.attachments.count > 0 && (!@page.hide_files || access(@page)) %>
+<div class="box-container-full">
+  <h1>
+    Files<%= content_tag(:span, " [hidden]", class: "h1-badge") if @page.hide_files %>
+    <%= link_to("Upload New File", new_folder_attachment_path(@folder), class: "h1-button") if access(@page) %>
+  </h1>
+  <ul class="files">
+    <%- @folder.attachments.by_name.each do |attachment| -%>
+    <li class="attachment-item<%= " nopointer" if attachment.description.blank? %>"><%= render partial: 'attachments/attachment', locals: { attachment: attachment } %></li>
+    <%- end -%>
+  </ul>
+</div>
+<% end %>

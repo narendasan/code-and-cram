@@ -1,0 +1,9 @@
+<div data-role="collapsible">
+  <h3>
+    <span class="title">
+      <%= message.title %> <%= image_tag("embed/icon-lock.png", class: "lock-icon") if message.private_item %>
+    </span>
+    <em class="message-date"><%= message.created_at.strftime("%m/%d") %></em>
+  </h3>
+  <div class="markdown"><%= markdown(message.contents).html_safe %></div>
+</div>

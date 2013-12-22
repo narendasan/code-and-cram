@@ -1,0 +1,46 @@
+<div id="full-page-side-bar">
+  <p class="instructions">Create static pages to display general information at at a unique url. Static pages can include text, photos, or links. Select a template and create nested resources at your discretion.</p>
+  <%= render "layout_descriptions" %>
+
+  <div id="static_page_nav_page_id_annotation" class="annotation">
+    <p>Choose from the following nav pages:
+      <span>
+        <% NavPage.all.each do |page| %>
+        <%= page.id.to_s %> &mdash; <%= page.name %><br>
+        <% end %>
+      </span>
+    </p>
+  </div>
+
+  <div id="static_page_nav_section_name_annotation" class="annotation">
+    <p>Choose from the following sections:</p>
+    <% NavPage.all.each do |page| %>
+    <p><%= page.name %>:<span>
+      <% page.nav_sections.each do |section| %>
+        <%= section.name %><br>
+      <% end %>
+    </span></p>
+    <% end %>
+  </div>
+
+  <div id="static_page_name_annotation" class="annotation">
+    <p>Please keep static page names as short as possible. Page names that are too long will appear cut off in some place of the site.</p>
+    <p>If you want to provide a more descriptive page name, you can add one as a heading in the contents below.</p>
+    <p>Use the 'Hide Name' checkbox to hide the page name from displaying in the page contents.</p>
+  </div>
+
+  <div id="static_page_url_annotation" class="annotation overlap">
+    <p>Page URLs define the path at which this page can be accessed through. URLs should contain only lowercase letters, numbers, and hyphens instead of spaces.</p>
+    <p>Example: <span>page-path</span></p>
+  </div>
+
+  <div id="static_page_contents_annotation" class="annotation">
+    <%= render "shared/markup_annotation" %>
+  </div>
+
+  <div id="static_page_url_forward_annotation" class="annotation">
+    <p>Enter a URL here to automatically forward visitors trying to access this static page to an external URL.</p>
+    <p>Note that any content that is stored in this Activity Page will not be easily accessible if the page is forwarded.</p>
+    <p>If you forward this page, be sure to <strong>remember the path to edit this page:</strong><span>/sites/[activity]/pages/[page]/edit</span><strong>because the normal 'Activity Settings' button will no longer be accessible.</strong></p>
+  </div>
+</div>

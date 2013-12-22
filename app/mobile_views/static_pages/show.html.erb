@@ -1,0 +1,13 @@
+<% if access(@page) && (@page.template != 1 || @page.hide_name) %>
+  <%= link_to "Edit", edit_static_page_path(@page), class: "h2-button" %>
+  <%= link_to "Delete", static_page_path(@page), class: "h2-button", data: { confirm: "Are you sure?" }, method: :delete %>
+  <%= link_to "Index", static_pages_path(@page), class: "h2-button" %>
+<% end %>
+
+<% if @page.template == 1 %>
+  <%= render "static_pages/layout_1", locals: { page: @page } %>
+<% elsif @page.template == 2 %>
+  <%= render "static_pages/layout_2", locals: { page: @page } %>
+<% elsif @page.template == 3 %>
+  <%= render "static_pages/layout_3", locals: { page: @page } %>
+<% end %>

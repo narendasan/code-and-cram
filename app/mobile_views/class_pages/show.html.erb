@@ -1,0 +1,236 @@
+<div class="class-box">
+  <div class="card">
+    <div class="class-box-top-border">
+      <h1>
+        <%= @class_page.name %>
+      </h1>
+     </div>
+    <div>
+      <div id="class-photo">
+        <%= image_tag @class_page.class_photo.url(:large), size: "260x150"%>
+       </div>
+     </div>
+    <div id="class-staff-box">
+      <h3 class="staff-profile-link">
+        <%= link_to @class_page.staff_page.full_name, @class_page.staff_page %>
+      </h3>
+      <p class="staff-mailto">
+        <a href="mailto:<%= @class_page.staff_page.email %>">
+          Contact via email
+        </a>
+      </p>
+    </div>
+    <div id="class-description-text">
+      <%# possessivize method defined in helpers/application_helper.rb %>
+      <%= simple_format markdown(truncate_words(@class_page.description.strip, 190, staff_page_class_page_class_description_path(@class_page.staff_page, @class_page)), simple: true), id: "class-description" %>
+    </div>
+    <% unless signed_in? && current_user.subscribed?(@class_page) %>
+      <% if @class_page.private_messages || @class_page.private_assignments || @class_page.private_files || @class_page.private_calendar %>
+        <div class="class-box notice">
+           <strong>
+             Some content on this site is only available to students. If you are a student, <%= link_to("sign in", :new_session) + " and" unless signed_in? %> subscribe to this class to access all content.
+          </strong>
+        </div>
+       <% end %>
+     <% end %>
+  </div>
+</div>
+
+<div class="box-container-column">
+  <div class="card">
+    <div class="box-container-small">
+      <h2>
+         Messages
+      </h2>
+      <%- if @messages.length > 0 -%>
+         <div data-role="collapsible-set">
+          <%- @messages.each do |message| -%>
+            <%= render partial: "messages/message_short", locals: {message: message} %>
+          <%- end -%>
+        </div>
+        <div class="show-more">
+           <%= link_to "More Messages", staff_page_class_page_class_messages_path(@class_page.staff_page, @class_page) %>
+         </div>
+      <%- else -%>
+        <%= image_tag "mobile-icon-messages.png", alt: "", class: "class_page_overview_icon" %>
+        <p>This class doesn't have any messages yet.</p>
+      <%- end -%>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="box-container-small">
+    <h2>
+       Recent Files
+    </h2>
+     <%- if @attachments.length > 0 -%>
+       <ul class="files" data-role="listview" data-divider-theme="b" data-inset="true">
+        <%- @attachments.each do |attachment| -%>
+          <li class="attachment-item<%= " nopointer" if attachment.description.blank? %>">
+            <%= render partial: 'attachments/attachment', locals: { attachment: attachment } %>
+          </li>
+        <%- end -%>
+       </ul>
+      <div class="show-more">
+        <%= link_to "More Files", staff_page_class_page_attachments_path(@class_page.staff_page, @class_page) %>
+      </div>
+    <%- else -%>
+      <%= image_tag "mobile-icon-files.png", alt: "", class: "class_page_overview_icon" %>
+      <p>This class doesn't have any files yet.</p>
+    <%- end -%>
+   </div>
+</div>
+
+<div class="box-container-column">
+  <div class="card">
+    <div class="box-container-small">
+      <h2>
+         Upcoming Assignments
+      </h2>
+      <%- if @assignments.length > 0 -%>
+        <div class="assignments" data-role="collapsible-set">
+          <%- @assignments.each do |assignment| -%>
+            <%= render assignment %>
+          <%- end -%>
+         </div>
+        <div class="show-more">
+          <%= link_to "More Assignments", staff_page_class_page_assignments_path(@class_page.staff_page, @class_page) %>
+        </div>
+      <%- else -%>
+        <div class="empty-module">
+           <%= image_tag "mobile-icon-assignments.png", size: "256x256", alt: "", class: "class_page_overview_icon" %>
+          <p>This class doesn't have any assignments yet.</p>
+        </div>
+      <%- end -%>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>
+    Events of the Week
+  </h2>
+  <%- if @events.length > 0 -%>
+    <div data-role="collapsible-set">
+      <%- if @events.monday.count > 0 -%>
+      <div data-theme="b" data-role="collapsible">
+        <h3>
+          <span class="important" style="float:left; margin-right:10px; margin-left:0px;"><%= image_tag "embed/important.png" %></span>
+      <% else %>
+      <div data-role="collapsible">
+        <h3>
+      <% end %>
+          <span id="week-day">MON</span>
+          <span id="date">
+            <%= this_week_date(1) %>
+          </span>
+        </h3>
+        <p>
+          <%- @events.monday.each do |event| -%>
+            <li>
+              <%= event.name %>
+            </li>
+          <%- end -%>
+        </p>
+      </div>
+
+      <%- if @events.tuesday.count > 0 -%>
+      <div data-theme="b" data-role="collapsible">
+        <h3>
+          <span class="important" style="float:left; margin-right:10px; margin-left:0px;"><%= image_tag "embed/important.png" %></span>
+      <% else %>
+      <div data-role="collapsible">
+        <h3>
+      <% end %>
+          <span id="week-day">TUES</span>
+          <span id="date">
+            <%= this_week_date(2) %>
+          </span>
+        </h3>
+        <p>
+          <%- @events.tuesday.each do |event| -%>
+            <li>
+              <%= event.name %>
+            </li>
+          <%- end -%>
+        </p>
+      </div>
+
+      <%- if @events.wednesday.count > 0 -%>
+      <div data-theme="b" data-role="collapsible">
+        <h3>
+          <span class="important" style="float:left; margin-right:10px; margin-left:0px;"><%= image_tag "embed/important.png" %></span>
+      <% else %>
+      <div data-role="collapsible">
+        <h3>
+      <% end %>
+          <span id="week-day">WED</span>
+          <span id="date">
+            <%= this_week_date(3) %>
+          </span>
+        </h3>
+        <p>
+          <%- @events.wednesday.each do |event| -%>
+            <li>
+              <%= event.name %>
+            </li>
+          <%- end -%>
+        </p>
+      </div>
+
+      <%- if @events.thursday.count > 0 -%>
+      <div data-theme="b" data-role="collapsible">
+        <h3>
+          <span class="important" style="float:left; margin-right:10px; margin-left:0px;"><%= image_tag "embed/important.png" %></span>
+      <% else %>
+      <div data-role="collapsible">
+        <h3>
+      <% end %>
+          <span id="week-day">THURS</span>
+          <span id="date">
+            <%= this_week_date(4) %>
+          </span>
+        </h3>
+        <p>
+          <%- @events.thursday.each do |event| -%>
+            <li>
+              <%= event.name %>
+            </li>
+          <%- end -%>
+        </p>
+      </div>
+
+      <%- if @events.friday.count > 0 -%>
+      <div data-theme="b" data-role="collapsible">
+        <h3>
+          <span class="important" style="float:left; margin-right:10px; margin-left:0px;"><%= image_tag "embed/important.png" %></span>
+      <% else %>
+      <div data-role="collapsible">
+        <h3>
+      <% end %>
+          <span id="week-day">FRI</span>
+          <span id="date">
+            <%= this_week_date(5) %>
+          </span>
+        </h3>
+        <p>
+          <%- @events.friday.each do |event| -%>
+            <li>
+              <%= event.name %>
+            </li>
+          <%- end -%>
+        </p>
+      </div>
+
+       <div class="show-more">
+        <%= link_to "Go to Calendar", staff_page_class_page_calendar_path(@class_page.staff_page, @class_page) %>
+      </div>
+    </div>
+  <%- else -%>
+    <div class="empty-module">
+       <%= image_tag "mobile-icon-calendar.png"%>
+      <p>This class doesn't have any events yet.</p>
+    </div>
+  <%- end -%>
+</div>

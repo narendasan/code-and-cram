@@ -1,0 +1,21 @@
+<div data-role="content" class="white" data-theme="e">
+  <div class="card-white">
+    <h2 class="blue">
+      Contact the Web Team
+      <div id="email-icon"></div>
+    </h2>
+    <%= render 'form' %>
+
+    <div id="full-page-side-bar">
+      <p class="instructions">Thank you for contacting the Fairview Web Team! Feel free to ask questions, offer feedback, request content updates, or report bugs on the site.</p>
+
+      <p class="instructions">We respond to all emails as fast as possible!</p>
+
+      <p class="instructions"><strong>If you&rsquo;re having trouble signing in, you can <%= link_to "reset your password", request_reset_password_path %>.</strong></p>
+
+      <div id="email_email_annotation" class="annotation overlap">
+        <p>Provide an email that you have access to and check regularly.</p>
+      </div>
+    </div>
+  </div>
+</div>
